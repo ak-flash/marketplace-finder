@@ -5,10 +5,10 @@ import (
 )
 
 type Target struct {
-	Id     int  `json:"id" gorm:"primaryKey;autoIncrement:true"`
-	Active bool `json:"active" gorm:"default:false"`
-	UserID string
-	//User      User   `gorm:"references:Id;constraint:OnUpdate:CASCADE,OnDelete:SET NULL;"`
+	Id        int  `json:"id" gorm:"primaryKey;autoIncrement:true"`
+	Active    bool `json:"active" gorm:"default:false"`
+	UserID    int
+	User      User
 	Name      string `json:"name" gorm:"not null;type:varchar(100);default:null"`
 	Price     int    `json:"target_price" gorm:"default:0"`
 	Percent   int    `json:"target_percent" gorm:"default:0"`
@@ -27,7 +27,7 @@ func GetTargets() []Target {
 	var checkTargets []Target
 
 	// Get all records
-	DB.Table("targets").Where("active", true).Find(&targets)
+	DB.Table("targets").Where("active", true).Joins("User").Find(&targets)
 
 	for _, each := range targets {
 		if time.Now().UTC().Add(-time.Minute * time.Duration(each.Period-1)).After(each.CheckedAt) {

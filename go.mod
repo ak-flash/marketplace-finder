@@ -4,7 +4,10 @@ go 1.21.6
 
 require github.com/go-co-op/gocron v1.37.0
 
-require github.com/chenzhuoyu/iasm v0.9.1 // indirect
+require (
+	github.com/chenzhuoyu/iasm v0.9.1 // indirect
+	github.com/dustin/go-humanize v1.0.1 // indirect
+)
 
 require (
 	github.com/BurntSushi/toml v1.2.1 // indirect
